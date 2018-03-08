@@ -2,19 +2,28 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   id: 'download-installer'
   volumes:
-  - name: 'archive-target'
-    path: '/workspace/ubuntu'
+  - name: 'installer-volume'
+    path: '/workspace/ubuntu/apache/installer'
   args: ['cp', 'gs://cyberlytic-internal/apache.tar.gz', 'ubuntu/apache/installer/linux/apache.tar.gz']
+
+- name: 'ubuntu'
+  id: 'debug'
+  args: ['/bin/bash', '-c', 'ls', '-Rla']
+  dir: 'ubuntu/apache'
+  volumes:
+  - name: 'installer-volume'
+    path: '/workspace/ubuntu/apache/installer'
+  waitFor: ['download-installer']
 
 - name: 'gcr.io/cloud-builders/docker'
   id: 'ubuntu-apache-build'
-  args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/images/vul/ubuntu-apache', '.']
+  args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/images/vulnerable/ubuntu-apache', '.']
   dir: 'ubuntu/apache'
   volumes:
-  - name: 'archive-target'
+  - name: 'installer-volume'
     path: '/workspace/ubuntu/apache/installer'
   waitFor: ['download-installer']
 
 timeout: 2400s
 
-images: ['eu.gcr.io/$PROJECT_ID/images/vul/ubuntu-apache']
+images: ['eu.gcr.io/$PROJECT_ID/images/vulnerable/ubuntu-apache']
