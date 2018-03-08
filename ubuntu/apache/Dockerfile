@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-RUN apt-get install -y curl
+RUN apt-get -qq update && apt-get -y install curl
 
 ADD sh /opt/cyberlytic/bin
 ADD var /var
