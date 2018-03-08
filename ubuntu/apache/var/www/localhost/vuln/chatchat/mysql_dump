@@ -1,0 +1,87 @@
+create database chatchat;
+use chatchat;
+
+-- MySQL dump 10.13  Distrib 5.5.47, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: chatchat
+-- ------------------------------------------------------
+-- Server version	5.5.47-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Private`
+--
+
+DROP TABLE IF EXISTS `Private`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Private` (
+  `id` int(11) DEFAULT NULL,
+  `company` varchar(50) DEFAULT NULL,
+  `contact` varchar(50) DEFAULT NULL,
+  `currency` varchar(50) DEFAULT NULL,
+  `balanceowed` varchar(50) DEFAULT NULL,
+  `location` varchar(50) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Private`
+--
+
+LOCK TABLES `Private` WRITE;
+/*!40000 ALTER TABLE `Private` DISABLE KEYS */;
+INSERT INTO `Private` VALUES (1,'Yakitri','Irene Collins','Peso','$9.52','Philippines','icollins0'),(2,'Quire','Frances Scott','Yuan Renminbi','$2.44','China','fscott1'),(3,'Lajo','Dennis Ross','Lek','$5.93','Albania','dross2'),(4,'Shufflebeat','Susan Bell','Yuan Renminbi','$4.98','China','sbell3'),(5,'Trudeo','Irene Gonzales','Yuan Renminbi','$5.76','China','igonzales4'),(6,'Photospace','Billy Day','Ringgit','$8.54','Malaysia','bday5'),(7,'Skibox','Virginia Richards','Yuan Renminbi','$5.37','China','vrichards6'),(8,'Oodoo','Kimberly Jones','Peso','$9.09','Philippines','kjones7'),(9,'Rhynyx','Brian Andrews','Lek','$3.18','Albania','bandrews8'),(10,'Topdrive','Ronald Torres','Zloty','$8.69','Poland','rtorres9'),(11,'Skajo','Gregory Stevens','Lek','$1.35','Albania','gstevensa'),(12,'Nlounge','Fred Russell','Rupiah','$7.57','Indonesia','frussellb'),(13,'Plambee','Matthew Dunn','Dollar','$7.24','Canada','mdunnc'),(14,'Jetpulse','Michael Richardson','Yuan Renminbi','$5.28','China','mrichardsond'),(15,'Vitz','Cynthia Young','Dollar','$9.60','United States','cyounge'),(16,'Brainbox','Justin Graham','Krona','$7.63','Sweden','jgrahamf'),(17,'Kare','Janet Spencer','Ruble','$3.08','Belarus','jspencerg'),(18,'Layo','Thomas Dunn','Rupiah','$3.46','Indonesia','tdunnh'),(19,'Tekfly','Teresa Nichols','Rupee','$1.33','Mauritius','tnicholsi'),(20,'Skalith','Helen Kim','Yuan Renminbi','$8.20','China','hkimj'),(21,'Pixoboo','Jimmy Ford','Ruble','$8.33','Russia','jfordk'),(22,'Edgeify','Jeremy Romero','Franc','$1.77','Cameroon','jromerol'),(23,'Aibox','Janet Walker','Euro','$4.05','San Marino','jwalkerm'),(24,'Shuffletag','Russell Morgan','Sol','$0.68','Peru','rmorgann'),(25,'Pixope','Ruth Stephens','Yuan Renminbi','$8.72','China','rstephenso'),(26,'Thoughtstorm','Pamela Mitchell','Rupiah','$4.39','Indonesia','pmitchellp'),(27,'Katz','Juan Roberts','Ruble','$2.21','Russia','jrobertsq'),(28,'Oozz','Martin Moreno','Shekel','$7.73','Palestinian Territory','mmorenor'),(29,'Eayo','Shirley Andrews','Rupiah','$9.64','Indonesia','sandrewss'),(30,'Fivechat','Johnny Campbell','Euro','$6.71','Portugal','jcampbellt'),(31,'Jaxnation','Aaron Warren','Rupiah','$4.29','Indonesia','awarrenu'),(32,'Browsezoom','Kevin Bell','Ruble','$6.91','Russia','kbellv'),(33,'Yadel','Donald Gilbert','Bolivar','$1.81','Venezuela','dgilbertw'),(34,'Linkbridge','Andrea Carter','Koruna','$0.01','Czech Republic','acarterx'),(35,'Buzzster','Tina Ryan','Franc','$2.99','Switzerland','tryany'),(36,'Mybuzz','Carl Baker','Dong','$1.59','Vietnam','cbakerz'),(37,'Quaxo','Larry Henry','Guarani','$3.94','Paraguay','lhenry10'),(38,'Roomm','Ruth Dixon','Dong','$1.82','Vietnam','rdixon11'),(39,'Fiveclub','Kevin Lane','Yuan Renminbi','$1.19','China','klane12'),(40,'Oyoyo','Ryan Jenkins','Euro','$3.07','France','rjenkins13'),(41,'Voomm','Bonnie Snyder','Rupiah','$1.51','Indonesia','bsnyder14'),(42,'Rhyloo','Daniel Harper','Krona','$0.12','Sweden','dharper15'),(43,'Wordtune','Janice Franklin','Denar','$0.47','Macedonia','jfranklin16'),(44,'Meetz','Bonnie Thomas','Euro','$6.58','France','bthomas17'),(45,'Edgeify','Frank Foster','Euro','$4.89','Finland','ffoster18'),(46,'Zazio','Eric Hunter','Tugrik','$5.29','Mongolia','ehunter19'),(47,'Oba','Jennifer Daniels','Zloty','$6.38','Poland','jdaniels1a'),(48,'Oodoo','Russell Roberts','Lek','$3.59','Albania','rroberts1b'),(49,'Jabbercube','Shawn Ortiz','Krona','$6.58','Sweden','sortiz1c'),(50,'Zoozzy','Daniel Cruz','Shekel','$1.18','Palestinian Territory','dcruz1d'),(51,'Skyndu','Ann Hicks','Krona','$1.84','Sweden','ahicks1e'),(52,'Pixoboo','Mark Rivera','Lek','$8.86','Albania','mrivera1f'),(53,'Babblestorm','Terry Bennett','Sol','$3.13','Peru','tbennett1g'),(54,'Skaboo','Helen Freeman','Euro','$1.04','Greece','hfreeman1h'),(55,'Gigazoom','Dorothy Ruiz','Euro','$1.65','Aland Islands','druiz1i'),(56,'Mudo','Philip Russell','Naira','$5.90','Nigeria','prussell1j'),(57,'Eabox','Linda Stewart','Yuan Renminbi','$6.27','China','lstewart1k'),(58,'Gigabox','Joe Day','Yuan Renminbi','$4.20','China','jday1l'),(59,'Skinder','Philip Spencer','Rupiah','$2.97','Indonesia','pspencer1m'),(60,'Avavee','Brandon Henderson','Hryvnia','$1.64','Ukraine','bhenderson1n'),(61,'Meevee','Laura Weaver','Peso','$6.58','Mexico','lweaver1o'),(62,'Dabjam','Larry Cox','Yuan Renminbi','$4.04','China','lcox1p'),(63,'Youopia','Andrew Marshall','Dollar','$0.56','Canada','amarshall1q'),(64,'Topdrive','Justin Hanson','Zloty','$6.90','Poland','jhanson1r'),(65,'Kwideo','Patricia Reid','Euro','$6.17','France','preid1s'),(66,'Thoughtmix','Kimberly Miller','Marka','$1.62','Bosnia and Herzegovina','kmiller1t'),(67,'Browsecat','Earl Moore','Yuan Renminbi','$5.45','China','emoore1u'),(68,'Skinte','Kelly Matthews','Euro','$9.92','Finland','kmatthews1v'),(69,'Centizu','Jose Alexander','Yuan Renminbi','$1.94','China','jalexander1w'),(70,'Livefish','Thomas Franklin','Euro','$1.63','France','tfranklin1x'),(71,'Yakitri','John Simmons','Zloty','$5.41','Poland','jsimmons1y'),(72,'Pixonyx','Willie Mcdonald','Franc','$3.39','Cameroon','wmcdonald1z'),(73,'Skajo','Jacqueline Hamilton','Boliviano','$2.00','Bolivia','jhamilton20'),(74,'Plajo','Sharon Ortiz','Zloty','$7.15','Poland','sortiz21'),(75,'Mynte','Lillian Matthews','Dollar','$0.49','United States','lmatthews22'),(76,'Gabcube','Margaret Burke','Ruble','$1.91','Russia','mburke23'),(77,'Dabfeed','Douglas Ellis','Yuan Renminbi','$7.27','China','dellis24'),(78,'Browseblab','Victor Fuller','Marka','$2.05','Bosnia and Herzegovina','vfuller25'),(79,'Skipfire','Deborah Freeman','Euro','$0.02','Slovenia','dfreeman26'),(80,'Miboo','Amy Lewis','Rupiah','$4.99','Indonesia','alewis27'),(81,'Izio','Diana Edwards','Baht','$7.27','Thailand','dedwards28'),(82,'Gabcube','Gregory Butler','Sol','$6.37','Peru','gbutler29'),(83,'Buzzster','Billy Bennett','Yuan Renminbi','$0.77','China','bbennett2a'),(84,'Riffwire','Jeremy Ray','Yuan Renminbi','$5.24','China','jray2b'),(85,'Oyoloo','Billy Mcdonald','Ruble','$5.44','Russia','bmcdonald2c'),(86,'Devify','Rebecca Gonzales','Yuan Renminbi','$0.82','China','rgonzales2d'),(87,'Dynazzy','Karen Reid','Zloty','$0.67','Poland','kreid2e'),(88,'Geba','Cheryl Morrison','Yuan Renminbi','$5.18','China','cmorrison2f'),(89,'Viva','Janet Brooks','Ruble','$9.73','Russia','jbrooks2g'),(90,'Jazzy','Gary Martinez','Real','$5.46','Brazil','gmartinez2h'),(91,'Realblab','Judy Rodriguez','Euro','$9.40','Finland','jrodriguez2i'),(92,'LiveZ','Cheryl Lopez','Yuan Renminbi','$8.02','China','clopez2j'),(93,'Dabjam','Justin Diaz','Rupiah','$4.27','Indonesia','jdiaz2k'),(94,'Livetube','Mark Miller','Euro','$7.39','Netherlands','mmiller2l'),(95,'Quinu','Bonnie Johnston','Hryvnia','$7.81','Ukraine','bjohnston2m'),(96,'Avamba','Keith Rivera','Yuan Renminbi','$0.19','China','krivera2n'),(97,'Devbug','Emily Garrett','Yuan Renminbi','$8.12','China','egarrett2o'),(98,'Gabspot','Kevin Stone','Real','$5.75','Brazil','kstone2p'),(99,'Babbleopia','Jessica Hall','Yuan Renminbi','$4.49','China','jhall2q'),(100,'Avamm','Henry Rogers','Peso','$9.66','Chile','hrogers2r');
+/*!40000 ALTER TABLE `Private` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customers`
+--
+
+DROP TABLE IF EXISTS `customers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customers` (
+  `ID` int(2) NOT NULL AUTO_INCREMENT,
+  `Firstname` varchar(50) NOT NULL,
+  `Lastname` varchar(50) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `PhoneNumber` varchar(50) NOT NULL,
+  `CardNum` varchar(50) NOT NULL,
+  `ExpDate` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customers`
+--
+
+LOCK TABLES `customers` WRITE;
+/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES (1,'James','Smith','jamessmith@yahoo.none','01346 324524','4501980056438574','0125'),(2,'Bob','Jacobson','bob@myfamily.com','01849312343','5259235848204827','0118'),(3,'Donald','Ruiz','druiz2@nasa.gov','46-(318)496-1462','4905705127472540595','18.01.2016'),(4,'Sara','Wilson','swilson3@merriam-webster.com','7-(450)598-7788','30112800189471','07.09.2015'),(5,'Stephen','Robertson','srobertson4@soundcloud.com','86-(979)563-0220','6763546601190080898','30.03.2015'),(6,'Roy','Phillips','rphillips5@altervista.org','86-(308)869-1427','4405752033277442','10.03.2015'),(7,'Clarence','Morrison','cmorrison6@unicef.org','51-(600)733-8213','3584028834420084','27.07.2015'),(8,'Dennis','Hawkins','dhawkins7@dedecms.com','964-(672)604-0750','201456225786053','05.08.2015'),(9,'Martin','Ray','mray8@nyu.edu','62-(393)207-4273','5100143991646296','12.07.2015'),(10,'Ruby','Moreno','rmoreno9@theglobeandmail.com','380-(242)196-7009','5010122475689369','21.07.2015'),(11,'Ruby','Jackson','rjacksona@cocolog-nifty.com','261-(960)433-2010','36130151590943','24.09.2015'),(12,'Shirley','Snyder','ssnyderb@google.es','381-(761)469-0330','3580416488626169','25.12.2015'),(13,'Ruby','Gonzalez','rgonzalezc@va.gov','86-(359)537-4014','561012227694083219','07.04.2015'),(14,'Ashley','Moore','amoored@ifeng.com','33-(364)766-1084','4026304507123758','16.05.2015'),(15,'Daniel','Reyes','dreyese@constantcontact.com','51-(379)221-6559','6391613636975926','07.10.2015'),(16,'Brian','Johnston','bjohnstonf@google.com','81-(185)217-8544','5504355547464766','09.01.2016'),(17,'Patrick','Howell','phowellg@so-net.ne.jp','86-(646)724-7471','4017954694806630','23.07.2015'),(18,'Frank','Thompson','fthompsonh@cam.ac.uk','66-(484)986-9798','3588326418798776','17.10.2015'),(19,'Lisa','Matthews','lmatthewsi@wsj.com','55-(696)301-2407','5602259698965814','09.07.2015'),(20,'Ernest','Jones','ejonesj@amazon.de','86-(759)686-6094','5108754446787592','26.01.2016'),(21,'Tammy','Franklin','tfranklink@hugedomains.com','55-(670)341-7215','4936229683218651','01.09.2015'),(22,'Martha','Dean','mdeanl@dailymotion.com','46-(919)738-8966','3587552401543983','11.11.2015'),(23,'Bobby','Mccoy','bmccoym@bandcamp.com','62-(609)245-3449','3569358378765878','19.03.2015'),(24,'Heather','Peters','hpetersn@cam.ac.uk','33-(523)961-1956','30384766008934','11.01.2016'),(25,'Donald','Washington','dwashingtono@salon.com','7-(733)592-5453','6767155302810579','08.04.2015'),(26,'Jason','Murphy','jmurphyp@etsy.com','62-(946)664-1313','560222013145149686','01.04.2015'),(27,'Deborah','Green','dgreenq@example.com','62-(788)331-7539','3576791778733610','11.02.2016'),(28,'Wanda','Riley','wrileyr@discovery.com','33-(361)819-7310','3574406747287166','20.10.2015'),(29,'Elizabeth','Gray','egrays@google.pl','86-(936)209-9876','4175003317132947','09.10.2015'),(30,'Gary','Elliott','gelliottt@woothemes.com','86-(974)432-8966','3564685811963867','23.04.2015'),(31,'Diane','Watson','dwatsonu@xing.com','1-(300)948-5495','346855984553719','02.08.2015'),(32,'Steven','Ross','srossv@harvard.edu','353-(473)423-3386','3532439225076158','19.02.2016'),(33,'Kathleen','Montgomery','kmontgomeryw@reuters.com','86-(408)363-8105','3560486740608333','31.01.2016'),(34,'Antonio','Bailey','abaileyx@fotki.com','98-(703)647-9658','30315556601777','07.08.2015'),(35,'Sara','Marshall','smarshally@chron.com','62-(175)406-5808','3544008755783966','30.03.2015'),(36,'George','Andrews','gandrewsz@fastcompany.com','7-(926)205-1573','3557144308480968','06.03.2015'),(37,'Julie','Long','jlong10@umich.edu','54-(157)597-6973','201553677519451','04.03.2016'),(38,'Doris','Garrett','dgarrett11@elpais.com','92-(349)709-0371','560222594840418260','25.05.2015'),(39,'Ann','Garrett','agarrett12@webnode.com','62-(578)934-3090','3578627793492840','01.01.2016'),(40,'Peter','Bailey','pbailey13@google.de','967-(710)363-3274','6771883753153695545','26.01.2016'),(41,'Brian','Wagner','bwagner14@wired.com','62-(443)576-6063','06048174032068706','19.08.2015'),(42,'Victor','Cox','vcox15@fastcompany.com','62-(800)937-2513','6761356287705257','30.10.2015'),(43,'Julia','Brooks','jbrooks16@yellowpages.com','52-(602)869-3922','5010127482505805','06.07.2015'),(44,'Tammy','Willis','twillis17@devhub.com','1-(321)662-7160','3570873100344401','24.10.2015'),(45,'Anna','Carroll','acarroll18@rediff.com','967-(665)889-1337','201618151148281','11.03.2015'),(46,'Eric','Gonzalez','egonzalez19@eepurl.com','7-(428)306-6507','3530963393714649','12.07.2015'),(47,'Denise','Flores','dflores1a@bizjournals.com','62-(874)263-8672','201913820901297','24.05.2015'),(48,'Nicole','Wagner','nwagner1b@eepurl.com','33-(400)263-7109','3550956393210456','26.12.2015'),(49,'Irene','Ortiz','iortiz1c@fastcompany.com','7-(451)817-6558','3542184797718799','28.03.2015'),(50,'Dennis','Parker','dparker1d@ox.ac.uk','51-(350)453-7056','630453017446020596','09.11.2015');
+/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-10-18 16:28:23

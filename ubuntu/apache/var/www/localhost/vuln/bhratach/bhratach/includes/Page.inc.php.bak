@@ -1,0 +1,596 @@
+<?php
+
+if( !defined( 'WEB_PAGE_TO_ROOT' ) ) {
+
+	define( 'BHRATACH System error- WEB_PAGE_TO_ROOT undefined' );
+	exit;
+
+}
+
+
+session_start(); // Creates a 'Full Path Disclosure' vuln.
+
+
+// Include configs
+require_once WEB_PAGE_TO_ROOT.'config/config.inc.php';
+
+require_once( 'PhpIds.inc.php' );
+
+// Declare the $html variable
+if(!isset($html)){
+
+	$html = "";
+
+}
+
+
+// Set security cookie to high if no cookie exists
+if (!isset($_COOKIE['security'])){
+
+	setcookie( 'security', 'high' );
+
+}
+
+// DVWA version
+function VersionGet() {
+
+	return '1.0.7';
+
+}
+
+// DVWA release date
+function ReleaseDateGet() {
+
+	return '08/09/10';
+
+}
+
+
+// Start session functions -- 
+
+function &SessionGrab() {
+
+	if( !isset( $_SESSION[ 'bhratach' ] ) ) {
+
+		$_SESSION[ 'bhratach' ] = array();
+
+	}
+
+	return $_SESSION[ 'bhratach' ];
+}
+
+
+function PageStartup( $pActions ) {
+
+	if( in_array( 'authenticated', $pActions ) ) {
+
+		if( !IsLoggedIn()){
+
+			Redirect( WEB_PAGE_TO_ROOT.'login.php' );
+
+		}
+	}
+
+	if( in_array( 'phpids', $pActions ) ) {
+
+		if( PhpIdsIsEnabled() ) {
+
+			dvwaPhpIdsTrap();
+
+		}
+	}
+}
+
+
+function PhpIdsEnabledSet( $pEnabled ) {
+
+	$Session =& SessionGrab();
+
+	if( $pEnabled ) {
+
+		$Session[ 'php_ids' ] = 'enabled';
+
+	} else {
+
+		unset( $Session[ 'php_ids' ] );
+
+	}
+}
+
+
+function PhpIdsIsEnabled() {
+
+	$Session =& SessionGrab();
+
+	return isset( $Session[ 'php_ids' ] );
+
+}
+
+
+function Login( $pUsername ) {
+
+	$Session =& SessionGrab();
+
+	$Session['username'] = $pUsername;
+
+}
+
+
+function IsLoggedIn() {
+
+	$Session =& SessionGrab();
+
+	return isset( $Session['username'] );
+
+}
+
+
+function Logout() {
+
+	$Session =& SessionGrab();
+
+	unset( $Session['username'] );
+
+}
+
+
+function PageReload() {
+
+	Redirect( $_SERVER[ 'PHP_SELF' ] );
+
+}
+
+function CurrentUser() {
+
+	$Session =& SessionGrab();
+
+	return ( isset( $Session['username']) ? $Session['username'] : '') ;
+
+}
+
+// -- END
+
+function &PageNewGrab() {
+
+	$returnArray = array(
+		'title' => 'Damn Vulnerable Web App (DVWA) v'.VersionGet().'',
+		'title_separator' => ' :: ',
+		'body' => '',
+		'page_id' => '',
+		'help_button' => '',
+		'source_button' => '',
+	);
+
+	return $returnArray;
+}
+
+
+function SecurityLevelGet() {
+
+	return isset( $_COOKIE[ 'security' ] ) ? $_COOKIE[ 'security' ] : 'high';
+
+}
+
+
+
+function SecurityLevelSet( $pSecurityLevel ) {
+
+	setcookie( 'security', $pSecurityLevel );
+
+}
+
+
+
+// Start message functions -- 
+function MessagePush( $pMessage ) {
+
+	$Session =& SessionGrab();
+
+	if( !isset( $Session[ 'messages' ] ) ) {
+
+		$Session[ 'messages' ] = array();
+
+	}
+
+	$Session[ 'messages' ][] = $pMessage;
+}
+
+
+
+function MessagePop() {
+
+	$Session =& SessionGrab();
+
+	if( !isset( $Session[ 'messages' ] ) || count( $Session[ 'messages' ] ) == 0 ) {
+
+		return false;
+
+	}
+
+	return array_shift( $Session[ 'messages' ] );
+}
+
+
+function messagesPopAllToHtml() {
+
+	$messagesHtml = '';
+
+	while( $message = MessagePop() ) {	// TODO- sharpen!
+
+		$messagesHtml .= "<div class=\"message\">{$message}</div>";
+
+	}
+
+	return $messagesHtml;
+}
+// --END
+
+function HtmlEcho( $pPage ) {
+
+	$menuBlocks = array();
+
+	$menuBlocks['home'] = array();
+	$menuBlocks['home'][] = array( 'id' => 'home', 'name' => 'Home', 'url' => '.' );
+//	$menuBlocks['home'][] = array( 'id' => 'instructions', 'name' => 'Instructions', 'url' => 'instructions.php' );
+//	$menuBlocks['home'][] = array( 'id' => 'setup', 'name' => 'Setup', 'url' => 'setup.php' );
+
+	$menuBlocks['flag'] = array();
+	$menuBlocks['flag'][] = array( 'id' => 'brute', 'name' => 'Brute Force', 'url' => 'flag/brute/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'exec', 'name' => 'Command Execution', 'url' => 'flag/exec/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'csrf', 'name' => 'CSRF', 'url' => 'flag/csrf/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'fi', 'name' => 'File Inclusion', 'url' => 'flag/fi/.?page=include.php' );
+	$menuBlocks['flag'][] = array( 'id' => 'sqli', 'name' => 'SQL Injection', 'url' => 'flag/sqli/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'sqli_blind', 'name' => 'SQL Injection (Blind)', 'url' => 'flag/sqli_blind/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'upload', 'name' => 'Upload', 'url' => 'flag/upload/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'xss_r', 'name' => 'XSS reflected', 'url' => 'flag/xss_r/.' );
+	$menuBlocks['flag'][] = array( 'id' => 'xss_s', 'name' => 'XSS stored', 'url' => 'flag/xss_s/.' );
+
+	$menuBlocks['meta'] = array();
+	$menuBlocks['meta'][] = array( 'id' => 'security', 'name' => 'DVWA Security', 'url' => 'security.php' );
+	$menuBlocks['meta'][] = array( 'id' => 'phpinfo', 'name' => 'PHP Info', 'url' => 'phpinfo.php' );
+	$menuBlocks['meta'][] = array( 'id' => 'about', 'name' => 'About', 'url' => 'about.php' );
+
+	$menuBlocks['logout'] = array();
+	$menuBlocks['logout'][] = array( 'id' => 'logout', 'name' => 'Logout', 'url' => 'logout.php' );
+
+	$menuHtml = '';
+
+	foreach( $menuBlocks as $menuBlock ) {
+
+		$menuBlockHtml = '';
+
+		foreach( $menuBlock as $menuItem ) {
+
+			$selectedClass = ( $menuItem[ 'id' ] == $pPage[ 'page_id' ] ) ? 'selected' : '';
+
+			$fixedUrl = WEB_PAGE_TO_ROOT.$menuItem['url'];
+
+			$menuBlockHtml .= "<li onclick=\"window.location='{$fixedUrl}'\" class=\"{$selectedClass}\"><a href=\"{$fixedUrl}\">{$menuItem['name']}</a></li>";
+
+		}
+
+		$menuHtml .= "<ul>{$menuBlockHtml}</ul>";
+	}
+
+	
+	// Get security cookie --
+	$securityLevelHtml = '';
+
+	switch( SecurityLevelGet() ) {
+
+		case 'low':
+			$securityLevelHtml = 'low';
+			break;
+
+		case 'medium':
+			$securityLevelHtml = 'medium';
+			break;
+
+		case 'high':
+		default:
+			$securityLevelHtml = 'high';
+			break;
+	}
+	// -- END
+	
+	$phpIdsHtml = '<b>PHPIDS:</b> '.( PhpIdsIsEnabled() ? 'enabled' : 'disabled' );
+
+	$userInfoHtml = '<b>Username:</b> '.( CurrentUser() );
+
+	$messagesHtml = messagesPopAllToHtml();
+
+	if( $messagesHtml ) {
+
+		$messagesHtml = "<div class=\"body_padded\">{$messagesHtml}</div>";
+
+	}
+	
+	$systemInfoHtml = "<div align=\"left\">{$userInfoHtml}<br /><b>Security Level:</b> {$securityLevelHtml}<br />{$phpIdsHtml}</div>";
+
+	if( $pPage[ 'source_button' ] ) {
+
+		$systemInfoHtml = ButtonSourceHtmlGet( $pPage[ 'source_button' ] )." $systemInfoHtml";
+
+	}
+
+	if( $pPage[ 'help_button' ] ) {
+
+		$systemInfoHtml = dvwaButtonHelpHtmlGet( $pPage[ 'help_button' ] )." $systemInfoHtml";
+
+	}
+	
+	
+	// Send Headers + main HTML code
+	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
+	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
+	Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
+
+	echo "
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+
+	<head>
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
+
+		<title>{$pPage['title']}</title>
+
+		<link rel=\"stylesheet\" type=\"text/css\" href=\"".WEB_PAGE_TO_ROOT."bhratach/css/main.css\" />
+
+		<link rel=\"icon\" type=\"\image/ico\" href=\"".WEB_PAGE_TO_ROOT."favicon.ico\" />
+
+		<script type=\"text/javascript\" src=\"".WEB_PAGE_TO_ROOT."bhratach/js/dvwaPage.js\"></script>
+
+	</head>
+
+	<body class=\"home\">
+		<div id=\"container\">
+
+			<div id=\"header\">
+
+				<img src=\"".WEB_PAGE_TO_ROOT."bhratach/images/logo.png\" alt=\"Damn Vulnerable Web App\" />
+
+			</div>
+
+			<div id=\"main_menu\">
+
+				<div id=\"main_menu_padded\">
+				{$menuHtml}
+				</div>
+
+			</div>
+
+			<div id=\"main_body\">
+
+				{$pPage['body']}
+				<br />
+				<br />
+				{$messagesHtml}
+
+			</div>
+
+			<div class=\"clear\">
+			</div>
+
+			<div id=\"system_info\">
+				{$systemInfoHtml}
+			</div>
+
+			<div id=\"footer\">
+
+				<p>Damn Vulnerable Web Application (DVWA) v".VersionGet()."</p>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>";
+}
+
+
+function dvwaHelpHtmlEcho( $pPage ) {
+	// Send Headers
+	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
+	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
+	Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
+
+	echo "
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+
+	<head>
+
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
+
+		<title>{$pPage['title']}</title>
+
+		<link rel=\"stylesheet\" type=\"text/css\" href=\"".WEB_PAGE_TO_ROOT."bhratach/css/help.css\" />
+
+		<link rel=\"icon\" type=\"\image/ico\" href=\"".WEB_PAGE_TO_ROOT."favicon.ico\" />
+
+	</head>
+
+	<body>
+	
+	<div id=\"container\">
+
+			{$pPage['body']}
+
+		</div>
+
+	</body>
+
+</html>";
+}
+
+
+function dvwaSourceHtmlEcho( $pPage ) {
+	// Send Headers
+	Header( 'Cache-Control: no-cache, must-revalidate');		// HTTP/1.1
+	Header( 'Content-Type: text/html;charset=utf-8' );		// TODO- proper XHTML headers...
+	Header( "Expires: Tue, 23 Jun 2009 12:00:00 GMT");		// Date in the past
+
+	echo "
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
+
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+
+	<head>
+
+		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />
+
+		<title>{$pPage['title']}</title>
+
+		<link rel=\"stylesheet\" type=\"text/css\" href=\"".WEB_PAGE_TO_ROOT."bhratach/css/source.css\" />
+
+		<link rel=\"icon\" type=\"\image/ico\" href=\"".WEB_PAGE_TO_ROOT."favicon.ico\" />
+
+	</head>
+
+	<body>
+
+		<div id=\"container\">
+
+			{$pPage['body']}
+
+		</div>
+
+	</body>
+
+</html>";
+}
+
+// To be used on all external links --
+function ExternalLinkUrlGet( $pLink,$text=null ) {
+
+	if (is_null($text)){
+
+		return '<a href="http://hiderefer.com/?'.$pLink.'" target="_blank">'.$pLink.'</a>';
+
+	}
+
+	else {
+
+		return '<a href="http://hiderefer.com/?'.$pLink.'" target="_blank">'.$text.'</a>';
+
+	}
+}
+// -- END
+
+function dvwaButtonHelpHtmlGet( $pId ) {
+
+	$security = SecurityLevelGet();
+
+	return "<input type=\"button\" value=\"View Help\" class=\"popup_button\" onClick=\"javascript:popUp( '".WEB_PAGE_TO_ROOT."flag/view_help.php?id={$pId}&security={$security}' )\">";
+
+}
+
+
+function ButtonSourceHtmlGet( $pId ) {
+
+	$security = SecurityLevelGet();
+
+	return "<input type=\"button\" value=\"View Source\" class=\"popup_button\" onClick=\"javascript:popUp( '".WEB_PAGE_TO_ROOT."flag/view_source.php?id={$pId}&security={$security}' )\">";
+
+}
+
+// Database Management --
+
+if ($DBMS == 'MySQL') {
+
+ $DBMS = htmlspecialchars(strip_tags($DBMS));
+
+ $DBMS_errorFunc = 'mysql_error()';
+
+}
+elseif ($DBMS == 'PGSQL') {
+
+ $DBMS = htmlspecialchars(strip_tags($DBMS));
+
+ $DBMS_errorFunc = 'pg_last_error()';
+
+}
+else {
+
+ $DBMS = "No DBMS selected.";
+
+ $DBMS_errorFunc = '';
+
+}
+
+$DBMS_connError = '<div align="center">
+		<img src="'.WEB_PAGE_TO_ROOT.'bhratach/images/logo.png">
+		<pre>Unable to connect to the database.<br>'.$DBMS_errorFunc.'<br /><br /></pre>
+		Click <a href="'.WEB_PAGE_TO_ROOT.'setup.php">here</a> to setup the database.
+		</div>';
+
+function DatabaseConnect() {
+
+	global $_BHRATACH;
+	global $DBMS;
+	global $DBMS_connError;
+
+	if ($DBMS == 'MySQL') {
+
+		if( !@mysql_connect( $_BHRATACH[ 'db_server' ], $_BHRATACH[ 'db_user' ], $_BHRATACH[ 'db_password' ] )
+		|| !@mysql_select_db( $_BHRATACH[ 'db_database' ] ) ) {
+			die( $DBMS_connError );
+		}
+
+	}
+	
+	elseif ($DBMS == 'PGSQL') {
+
+		$dbconn = pg_connect("host=".$_BHRATACH[ 'db_server' ]." dbname=".$_BHRATACH[ 'db_database' ]." user=".$_BHRATACH[ 'db_user' ]." password=".$_BHRATACH[ 'db_password' ])
+		or die( $DBMS_connError );
+
+	}
+}
+
+// -- END
+
+
+function Redirect( $pLocation ) {
+
+	session_commit();
+	header( "Location: {$pLocation}" );
+	exit;
+
+}
+
+// XSS Stored guestbook function --
+function dvwaGuestbook(){
+
+	$query  = "SELECT name, comment FROM guestbook";
+	$result = mysql_query($query);
+
+	$guestbook = '';
+	
+	while($row = mysql_fetch_row($result)){	
+		
+		if (SecurityLevelGet() == 'high'){
+
+			$name    = htmlspecialchars($row[0]);
+			$comment = htmlspecialchars($row[1]);
+	
+		}
+
+		else {
+
+			$name    = $row[0];
+			$comment = $row[1];
+
+		}
+		
+		$guestbook .= "<div id=\"guestbook_comments\">Name: {$name} <br />" . "Message: {$comment} <br /></div>";
+	} 
+	
+return $guestbook;
+}
+// -- END
+
+
+?>
