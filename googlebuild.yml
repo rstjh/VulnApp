@@ -6,15 +6,6 @@ steps:
     path: '/workspace/ubuntu/apache/installer'
   args: ['cp', 'gs://cyberlytic-internal/apache.tar.gz', 'ubuntu/apache/installer/linux/apache.tar.gz']
 
-- name: 'ubuntu'
-  id: 'debug'
-  args: ['/bin/bash', '-c', 'ls', '-Rla']
-  dir: 'ubuntu/apache'
-  volumes:
-  - name: 'installer-volume'
-    path: '/workspace/ubuntu/apache/installer'
-  waitFor: ['download-installer']
-
 - name: 'gcr.io/cloud-builders/docker'
   id: 'ubuntu-apache-build'
   args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/images/vulnerable/ubuntu-apache', '.']
