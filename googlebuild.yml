@@ -15,6 +15,12 @@ steps:
     path: '/workspace/ubuntu/apache/installer'
   waitFor: ['download-installer']
 
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'traffic-generator-build'
+  args: ['build', '--tag=eu.gcr.io/$PROJECT_ID/images/vulnerable/traffic-generator', '.']
+  dir: 'traffic-generator'
+  waitFor: ['-']
+
 timeout: 2400s
 
-images: ['eu.gcr.io/$PROJECT_ID/images/vulnerable/ubuntu-apache']
+images: ['eu.gcr.io/$PROJECT_ID/images/vulnerable/ubuntu-apache', 'eu.gcr.io/$PROJECT_ID/images/vulnerable/traffic-generator']
