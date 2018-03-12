@@ -18,4 +18,4 @@ echo ">> Starting connector..."
 /opt/cyberlytic/bin/ctpc /opt/cyberlytic/config.toml
 
 echo ">> Success!..."
-tail -F /var/lib/cyberlytic/ctpc.log
+tail -F /var/lib/cyberlytic/ctpc.log /var/log/apache2/access.log
