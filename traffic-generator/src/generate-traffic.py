@@ -7,7 +7,7 @@ import sys
 import os
 
 
-DEFAULT_HOST = 'http://localhost:8080'
+DEFAULT_HOST = 'localhost:8080'
 
 attacks = {
     'low': [
